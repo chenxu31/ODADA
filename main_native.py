@@ -188,7 +188,7 @@ def main(device, args):
     start_epoch = args.start_epoch
     print('loading the {0},{1},{2} dataset ...'.format('train', 'test', 'test'))
 
-    args.num_input = 3
+    args.num_input = 1
     if args.task == "pelvic":
         args.num_classes = common_pelvic.NUM_CLASSES
         dataset_s = common_pelvic.Dataset(args.root_path, "ct", n_slices=args.num_input, debug=args.debug)
@@ -214,7 +214,7 @@ def main(device, args):
     print('Loading is done\n')
 
 #     model = UNet_DA()
-    model = deeplabv3_resnet50(num_classes=2)
+    model = deeplabv3_resnet50(num_classes=args.num_classes)
     model = nn.DataParallel(model)
     if args.gpu >= 0:
         model = model.cuda()
@@ -254,7 +254,7 @@ def main(device, args):
         dsc_list = np.zeros((len(val_data_t), args.num_classes - 1), np.float32)
         with torch.no_grad():
             for i in range(len(val_data_t)):
-                pred = common_net.produce_results(device, model, [patch_shape, ], [val_data_t[i], ],
+                pred = common_net.produce_results(device, lambda x: model(x).softmax(1).unsqueeze(2), [patch_shape, ], [val_data_t[i], ],
                                                   data_shape=val_data_t[i].shape, patch_shape=patch_shape,
                                                   is_seg=True, num_classes=args.num_classes)
                 dsc_list[i] = common_metrics.calc_multi_dice(pred, val_label_t[i], num_cls=args.num_classes)
@@ -315,7 +315,7 @@ if __name__ == '__main__':
                         help='learning rate (default: 0.001)')  # 初始学习率
     parser.add_argument('--num_classes', default=4, type=int,
                         help='number of classes')
-    parser.add_argument('--num_input', default=3, type=int,
+    parser.add_argument('--num_input', default=1, type=int,
                         help='number of input image for each patient')
     parser.add_argument('--weight_decay', default=1e-8, type=float, help='weights regularizer')
     parser.add_argument('--particular_epoch', default=30, type=int,
