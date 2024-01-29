@@ -194,8 +194,8 @@ def main(device, args):
     args.num_input = 3
     if args.task == "pelvic":
         args.num_classes = common_pelvic.NUM_CLASSES
-        dataset_s = common_pelvic.Dataset(args.data_dir, "ct", n_slices=args.num_input, debug=args.debug)
-        dataset_t = common_pelvic.Dataset(args.data_dir, "cbct", n_slices=args.num_input, debug=args.debug)
+        dataset_s = common_pelvic.Dataset(args.root_path, "ct", n_slices=args.num_input, debug=args.debug)
+        dataset_t = common_pelvic.Dataset(args.root_path, "cbct", n_slices=args.num_input, debug=args.debug)
 
         trainloader_a = torch.utils.data.DataLoader(dataset_s,
                                                     batch_size=args.batch_size,
@@ -210,7 +210,7 @@ def main(device, args):
                                                     pin_memory=True,
                                                     drop_last=True)
 
-        _, val_data_t, _, val_label_t = common_pelvic.load_val_data(args.data_dir)
+        _, val_data_t, _, val_label_t = common_pelvic.load_val_data(args.root_path)
     else:
         assert 0
 
