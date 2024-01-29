@@ -107,8 +107,10 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
             if "feature_extractor" in name:
                 param.requires_grad = True
 
-        (x_a, y_a) = data[0]
-        (x_b, y_b) = data[1]
+        x_a = data[0]["image"].to(device)
+        y_a = data[0]["label"].to(device)
+        x_a = data[1]["image"].to(device)
+        y_b = None
         if not (x_a.shape[0] == args.batch_size):
             # print(step)
             continue
@@ -118,7 +120,7 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
         image_a = Variable(x_a.cuda())
         target_a = Variable(y_a.long().squeeze(dim=1).cuda())
         image_b = Variable(x_b.cuda())
-        target_b = Variable(y_b.long().squeeze(dim=1).cuda())
+        target_b = None #Variable(y_b.long().squeeze(dim=1).cuda())
 
         final_a, _, _, _ = model(x_a)
 
@@ -137,8 +139,10 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
             if "feature_extractor" in name:
                 param.requires_grad = False
 
-        (x_a, y_a) = data[0]
-        (x_b, y_b) = data[1]
+        x_a = data[0]["image"].to(device)
+        y_a = data[0]["label"].to(device)
+        x_a = data[1]["image"].to(device)
+        y_b = None
         if not (x_a.shape[0] == args.batch_size):
             continue
         if not (x_b.shape[0] == args.batch_size):
@@ -147,7 +151,7 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
         image_a = Variable(x_a.cuda())
         target_a = Variable(y_a.long().squeeze(dim=1).cuda())
         image_b = Variable(x_b.cuda())
-        target_b = Variable(y_b.long().squeeze(dim=1).cuda())
+        target_b = None #Variable(y_b.long().squeeze(dim=1).cuda())
 
 
         final_a, loss_orthogonal_a, prob_di_a, prob_ds_a = model(x_a, 2)
