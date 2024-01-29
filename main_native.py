@@ -109,7 +109,7 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
 
         x_a = data[0]["image"].to(device)
         y_a = data[0]["label"].to(device)
-        x_a = data[1]["image"].to(device)
+        x_b = data[1]["image"].to(device)
         y_b = None
         if not (x_a.shape[0] == args.batch_size):
             # print(step)
@@ -141,7 +141,7 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
 
         x_a = data[0]["image"].to(device)
         y_a = data[0]["label"].to(device)
-        x_a = data[1]["image"].to(device)
+        x_b = data[1]["image"].to(device)
         y_b = None
         if not (x_a.shape[0] == args.batch_size):
             continue
