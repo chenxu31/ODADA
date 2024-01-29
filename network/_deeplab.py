@@ -67,7 +67,7 @@ class DeepLabHead(nn.Module):
             nn.Conv2d(256, 256, 3, padding=1, bias=False),
             nn.BatchNorm2d(256),
             nn.ReLU(inplace=True),
-            nn.Conv2d(256, num_classes, 1)
+            nn.Conv2d(256, num_classes * 3, 1)
         )
         self._init_weight()
 
