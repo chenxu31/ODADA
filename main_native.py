@@ -53,14 +53,9 @@ from torch.autograd import Variable
 from distutils.version import LooseVersion
 
 from Models.model_mia1201 import UNet_DA
-from Models.model_mia1201_resnet import UNet_DA_resnet
 # import lib
 
-from utils.dice_loss import get_soft_label, val_dice, SoftDiceLoss
-from utils.dice_loss import Intersection_over_Union
-from utils_new.dice_loss_github import SoftDiceLoss_git, CrossentropyND
-from metrics import jaccard_index, f1_score, LogNLLLoss, classwise_f1
-from utils_tf import JointTransform2D, ImageToImage2D, Image2D
+from metrics import LogNLLLoss
 
 from utils.evaluation import AverageMeter
 from utils.binary import assd, dc, jc, precision, sensitivity, specificity, F1, ACC
@@ -73,8 +68,6 @@ from torchvision import transforms
 from torch import nn
 
 from itertools import cycle
-import surface_distance as surfdist
-from medpy import metric
 
 from network import deeplabv3plus_resnet50, deeplabv3_resnet50
 
