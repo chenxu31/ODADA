@@ -215,7 +215,6 @@ def main(device, args):
 
 #     model = UNet_DA()
     model = deeplabv3_resnet50(num_classes=args.num_classes)
-    model = nn.DataParallel(model)
     if args.gpu >= 0:
         model = model.cuda()
 
