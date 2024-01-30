@@ -1,0 +1,4 @@
+# pelvic
+python main_native.py --gpu 1 --root_path ~/datasets/pelvic/h5_data --ckpt ~/training/checkpoints/odada/pelvic
+
+python test_native.py --gpu 1 --root_path ~/datasets/pelvic/h5_data --ckpt ~/training/checkpoints/odada/pelvic/best/pth --output_dir ~/training/test_output/odada/pelvic
