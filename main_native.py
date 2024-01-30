@@ -339,8 +339,8 @@ if __name__ == '__main__':
     """
     if not os.path.isdir(args.ckpt):
         os.makedirs(args.ckpt)
-    logfile = os.path.join(args.ckpt, 'logs.txt')  # 训练日志保存地址
-    sys.stdout = Logger(logfile)
+    #logfile = os.path.join(args.ckpt, 'logs.txt')  # 训练日志保存地址
+    #sys.stdout = Logger(logfile)
 
     print('Models are saved at %s' % (args.ckpt))
     print("Input arguments:")
