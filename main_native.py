@@ -257,6 +257,7 @@ def main(device, args):
                 pred = common_net.produce_results(device, lambda x: model(x)[0].softmax(1), [patch_shape, ], [val_data_t[i], ],
                                                   data_shape=val_data_t[i].shape, patch_shape=patch_shape,
                                                   is_seg=True, num_classes=args.num_classes)
+                pred = pred.argmax(0).astype(numpy.float32)
                 dsc_list[i] = common_metrics.calc_multi_dice(pred, val_label_t[i], num_cls=args.num_classes)
 
         model.train()
