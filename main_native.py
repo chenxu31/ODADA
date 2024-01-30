@@ -175,7 +175,7 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
 
         if step % (math.ceil(float(len(trainloader_a.dataset)) / args.batch_size)) == 0:
             print('current lr: {} | Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {losses.avg:.6f}'.format(
-                optimizer.state_dict()['param_groups'][0]['lr'],
+                optimizer1.state_dict()['param_groups'][0]['lr'],
                 epoch, step * len(image_a), len(trainloader_a.dataset),
                        100. * step / len(trainloader_a), losses=losses))
 
@@ -261,7 +261,7 @@ def main(device, args):
 
         model.train()
 
-        state = {'epoch': epoch, 'state_dict': model.state_dict(), 'opt_dict': optimizer.state_dict()}
+        state = {'epoch': epoch, 'state_dict': model.state_dict(), 'opt1_dict': optimizer1.state_dict(), 'opt2_dict': optimizer2.state_dict()}
         if dsc_list.mean() > best_dsc:
             best_dsc = dsc_list.mean()
             torch.save(state, os.path.join(args.ckpt, 'best.pth'))
