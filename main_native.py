@@ -165,7 +165,7 @@ def train(trainloader_a, trainloader_b, model, criterion, scheduler, optimizer1,
         loss_seg = criterion_tf(final_a, target_a)
         loss_class = bce(prob_di_a, prob_di_source) + bce(prob_di_b, prob_di_target) + bce(prob_ds_a, prob_ds_source) + bce(prob_ds_b, prob_ds_target)
 
-        loss = loss_seg + loss_orthogonal_a.mean() + loss_orthogonal_b.mean() + loss_class * 0.1
+        loss = loss_seg + (loss_orthogonal_a.mean() + loss_orthogonal_b.mean()) * args.lambda1 + loss_class * args.lambda2
         losses.update(loss.data, image_a.size(0))
 
         optimizer2.zero_grad()
@@ -327,6 +327,8 @@ if __name__ == '__main__':
 
     parser.add_argument('--gpu', default=0, type=int, help='GPU ID')  # 训练数据
     parser.add_argument('--debug', default=0, type=int, help='debug flag')  # 训练数据
+    parser.add_argument('--lambda1', default=1, type=float, help='lambda')  # 训练数据
+    parser.add_argument('--lambda2', default=0.1, type=float, help='lambda')  # 训练数据
 
     args = parser.parse_args()
 
